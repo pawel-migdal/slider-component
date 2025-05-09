@@ -15,7 +15,8 @@ interface LabelsInterface {
 
 function App() {
   const [position, setPosition] = useState({ x: 250, y: 250 });
-  const [normalizedCoords, setNormalizedCoords] = useState({ x: 0, y: 0 });
+  const [position2, setPosition2] = useState({ x: 250, y: 250 });
+  const [position3, setPosition3] = useState({ x: 250, y: 250 });
 
   const labels: LabelsInterface = {
     right: "Formal",
@@ -34,7 +35,6 @@ function App() {
       <Slider
         position={position}
         setPosition={setPosition}
-        onChange={setNormalizedCoords}
         tracker={false}
         grid={false}
       />
@@ -42,9 +42,8 @@ function App() {
 
       <h2>Example 2: With tracker and grid</h2>
       <Slider
-        position={position}
-        setPosition={setPosition}
-        onChange={setNormalizedCoords}
+        position={position2}
+        setPosition={setPosition2}
         tracker={true}
         grid={true}
       />
@@ -52,21 +51,14 @@ function App() {
 
       <h2>Example 3: With tracker, grid, and labels</h2>
       <Slider
-        position={position}
-        setPosition={setPosition}
-        onChange={setNormalizedCoords}
+        position={position3}
+        setPosition={setPosition3}
         tracker={true}
         grid={true}
         labels={labels}
       />
 
 
-      {/* Example of accessing the normalized coordinates from outside the component */}
-      <div className="external-usage">
-        <h3>External Access to Coordinates:</h3>
-        <p>Normalized X: {normalizedCoords.x}</p>
-        <p>Normalized Y: {normalizedCoords.y}</p>
-      </div>
     </div>
   );
 }

@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
-import './slider.css';  // We'll create this file for the breakpoint styles
+import { useEffect, useRef, useState } from 'react';
+import './slider.css';
 
 interface SliderProps {
     position: { x: number, y: number };
     setPosition: (position: { x: number, y: number }) => void;
-    onChange?: (coordinates: { x: number, y: number }) => void;
     tracker?: boolean;
     grid?: boolean;
     labels?: {
@@ -19,15 +18,14 @@ interface SliderProps {
     };
 }
 
-function Slider({ position, setPosition, onChange, tracker, grid, labels }: SliderProps) {
+function Slider({ position, setPosition, tracker, grid, labels }: SliderProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const [isDragging, setIsDragging] = useState(false);
     const [canvasCenter, setCanvasCenter] = useState({ x: 250, y: 250 });
     const [canvasSize, setCanvasSize] = useState({ width: 500, height: 500 });
 
-    // Create memoized drawing functions to prevent rerenders
-    const drawCanvas = useCallback(() => {
+    useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
@@ -61,10 +59,9 @@ function Slider({ position, setPosition, onChange, tracker, grid, labels }: Slid
 
         // if tracker is true, draw the tracker first (behind other elements)
         if (tracker) {
-            // Save the current context state
+
             ctx.save();
 
-            // Set tracker style
             ctx.strokeStyle = 'blue';
             ctx.setLineDash([5, 5]);
 
@@ -79,7 +76,6 @@ function Slider({ position, setPosition, onChange, tracker, grid, labels }: Slid
             ctx.lineTo(canvas.width, position.y);
             ctx.stroke();
 
-            // Restore context to previous state
             ctx.restore();
         }
 
@@ -105,9 +101,9 @@ function Slider({ position, setPosition, onChange, tracker, grid, labels }: Slid
 
             // Set the canvas dimensions to match its container
             canvas.width = containerWidth;
-            canvas.height = containerWidth; // Keep it square
+            canvas.height = containerWidth;
 
-            // Update state
+
             setCanvasSize({ width: containerWidth, height: containerWidth });
             setCanvasCenter({ x: containerWidth / 2, y: containerWidth / 2 });
 
@@ -115,7 +111,7 @@ function Slider({ position, setPosition, onChange, tracker, grid, labels }: Slid
             if (position.x > 0 && position.y > 0) {
                 const scaleRatio = containerWidth / 500; // Compare to default size
                 // Only adjust if it's a significant change
-                if (Math.abs(scaleRatio - 1) > 0.1) {
+                if ((1 - scaleRatio) > 0.1) {
                     setPosition({
                         x: position.x * scaleRatio,
                         y: position.y * scaleRatio
@@ -125,11 +121,8 @@ function Slider({ position, setPosition, onChange, tracker, grid, labels }: Slid
                 // Initialize position to center if not already set
                 setPosition({ x: containerWidth / 2, y: containerWidth / 2 });
             }
-
-            console.log("Canvas size updated:", containerWidth);
         };
 
-        // Initialize
         updateCanvasSize();
 
         // Setup resize listener
@@ -141,19 +134,7 @@ function Slider({ position, setPosition, onChange, tracker, grid, labels }: Slid
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Effect for drawing and onChange callback
-    useEffect(() => {
-        // Draw the canvas
-        drawCanvas();
 
-        // Call onChange if provided
-        if (onChange) {
-            const normalizedX = Math.round(position.x - canvasCenter.x);
-            const normalizedY = Math.round(-(position.y - canvasCenter.y));
-            onChange({ x: normalizedX, y: normalizedY });
-            console.log(normalizedX, normalizedY);
-        }
-    }, [position, canvasCenter, onChange, drawCanvas]);
 
     const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
         const canvas = canvasRef.current;
@@ -224,15 +205,15 @@ function Slider({ position, setPosition, onChange, tracker, grid, labels }: Slid
         setPosition({ x: boundedX, y: boundedY });
     };
 
-    const handleMouseUp = () => {
+    const handleMouseUp = (e: React.MouseEvent<HTMLCanvasElement>) => {
         setIsDragging(false);
     };
 
-    const handleTouchEnd = () => {
+    const handleTouchEnd = (e: React.TouchEvent<HTMLCanvasElement>) => {
         setIsDragging(false);
     };
 
-    const handleTouchCancel = () => {
+    const handleTouchCancel = (e: React.TouchEvent<HTMLCanvasElement>) => {
         setIsDragging(false);
     };
 
