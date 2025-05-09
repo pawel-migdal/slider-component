@@ -1,0 +1,159 @@
+.slider-container {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 300px;
+    /* Default for small devices */
+}
+
+/* Wrapper for entire slider component with labels */
+.slider-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Row container for side labels and canvas */
+.slider-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Label styling */
+.slider-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+
+.slider-label.left,
+.slider-label.right {
+    margin: 0 10px;
+    flex-shrink: 0;
+    width: 40px;
+}
+
+.slider-label.top,
+.slider-label.bottom {
+    margin: 5px 0;
+    width: 100%;
+    max-width: 300px;
+}
+
+/* For vertical text on sides */
+.slider-label.left .slider-text,
+.slider-label.right .slider-text {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    background-color: black;
+    color: white;
+    padding: 8px 2px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+/* For horizontal text on top/bottom */
+.slider-label.top .slider-text,
+.slider-label.bottom .slider-text {
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+/* Emoji styling */
+.slider-emoji {
+    font-size: 24px;
+    margin: 5px;
+}
+
+.slider-coordinates {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+    font-family: monospace;
+    font-weight: bold;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.slider-coordinates p {
+    margin: 0;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 600px) {
+    .slider-container {
+        max-width: 320px;
+    }
+
+    .slider-coordinates {
+        max-width: 320px;
+    }
+
+    .slider-label.top,
+    .slider-label.bottom {
+        max-width: 320px;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .slider-container {
+        max-width: 400px;
+    }
+
+    .slider-coordinates {
+        max-width: 400px;
+    }
+
+    .slider-label.top,
+    .slider-label.bottom {
+        max-width: 400px;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .slider-container {
+        max-width: 500px;
+    }
+
+    .slider-coordinates {
+        max-width: 500px;
+    }
+
+    .slider-label.top,
+    .slider-label.bottom {
+        max-width: 500px;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .slider-container {
+        max-width: 500px;
+    }
+
+    .slider-coordinates {
+        max-width: 500px;
+    }
+
+    .slider-label.top,
+    .slider-label.bottom {
+        max-width: 500px;
+    }
+}
